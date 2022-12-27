@@ -1,0 +1,11 @@
+node_modules
+webpack.common.mjs
+webpack.dev.mjs
+webpack.prod.mjs
+.eslintrc.json
+tsconfig.json
+stats.json
+dist
+__snapshots__
+coverage
+src/utils/tests/fileTransformer.mjs
