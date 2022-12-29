@@ -1,18 +1,22 @@
 import React, { FC } from 'react';
-import { Box } from '@mui/material';
+import { Stack, Typography, useTheme } from '@mui/material';
 import TagForm from '@src/feautures/TagsList/TagForm';
 import { getTagsFromUrlHash } from '@src/feautures/TagsList/tags.utils';
 import { TagsListMemorized } from '@src/feautures/TagsList/TagsList';
 import { router } from '@src/router/router';
 
 const IndexPage: FC = () => {
+  const theme = useTheme();
   const tags = getTagsFromUrlHash(router.history.location.hash);
 
   return (
-    <Box>
+    <Stack gap={theme.spacing(1)}>
+      <Typography variant="h4" align="center">
+        Add your tags 🏷️
+      </Typography>
       <TagForm />
       <TagsListMemorized tags={tags} />
-    </Box>
+    </Stack>
   );
 };
 

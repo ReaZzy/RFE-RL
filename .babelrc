@@ -10,10 +10,6 @@
       {
         "regenerator": true
       }
-    ], [
-      "babel-plugin-styled-components", {
-        "ssr": false
-      }
     ]
   ]
 }

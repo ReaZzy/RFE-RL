@@ -1,16 +1,17 @@
 import React, { FC, useState } from 'react';
-import { Button, Stack, TextField, useTheme } from '@mui/material';
+import { Box, Button, Stack, TextField, useTheme } from '@mui/material';
 import {
   addTagHashToUrl,
   deleteTagFromHash,
   TagType,
   tagValidationSchema,
 } from '@src/feautures/TagsList/tags.utils';
-import { router } from '@src/router/router';
 import { parseZodErrors } from '@src/utils/errors/zod.utils';
+import { useRouter } from '@tanstack/react-router';
 
 const TagForm: FC = () => {
   const theme = useTheme();
+  const router = useRouter();
   const [tag, setTag] = useState<TagType>('');
   const [tagError, setTagError] = useState<string | null>(null);
 
@@ -48,40 +49,42 @@ const TagForm: FC = () => {
   };
 
   return (
-    <form
-      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-      }}
-    >
-      <Stack direction="row" gap={theme.spacing(1)}>
-        <TextField
-          value={tag}
-          onChange={handleChangeTag}
-          label="Tag name"
-          size="small"
-          error={!!tagError}
-          helperText={tagError}
-        />
-        <Button
-          onClick={handleAddTag}
-          type="submit"
-          variant="contained"
-          disabled={!!tagError || !tag.trim()}
-          sx={{ maxHeight: '40px' }}
-        >
-          Add tag
-        </Button>
-        <Button
-          onClick={handleDeleteTag}
-          variant="contained"
-          color="error"
-          disabled={!!tagError || !tag.trim()}
-          sx={{ maxHeight: '40px' }}
-        >
-          Delete tag
-        </Button>
-      </Stack>
-    </form>
+    <Box sx={{ margin: '0 auto' }}>
+      <form
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+          e.preventDefault();
+        }}
+      >
+        <Stack direction="row" gap={theme.spacing(1)}>
+          <TextField
+            value={tag}
+            onChange={handleChangeTag}
+            label="Tag name"
+            size="small"
+            error={!!tagError}
+            helperText={tagError}
+          />
+          <Button
+            onClick={handleAddTag}
+            type="submit"
+            variant="contained"
+            disabled={!!tagError || !tag.trim()}
+            sx={{ maxHeight: '40px' }}
+          >
+            Add tag
+          </Button>
+          <Button
+            onClick={handleDeleteTag}
+            variant="contained"
+            color="error"
+            disabled={!!tagError || !tag.trim()}
+            sx={{ maxHeight: '40px' }}
+          >
+            Delete tag
+          </Button>
+        </Stack>
+      </form>
+    </Box>
   );
 };
 

@@ -75,7 +75,16 @@ export const deleteTagFromHash = (
 
       const replaceValue =
         tempTags.length > 0 ? `#tags=${tempTags.join(',')}` : '';
-      result = result.replace(tags[0], replaceValue);
+      /*
+       * @description (review) Do dynamic regexp so if we have #tags=1234#tags=123
+       * and tagTaDelete 123 we won't replace first part.
+       *
+       * @example without regexp
+       *  #tags=1234#tags=123 (tagToDelete: 123) -> ##tags=123
+       * with regexp
+       * #tags=1234#tags=123 (tagToDelete: 123) -> #tags=1234
+       */
+      result = result.replace(new RegExp(`${tags[0]}$`), replaceValue);
 
       hasDeleted = true;
     }
