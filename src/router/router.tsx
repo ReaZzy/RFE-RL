@@ -20,14 +20,14 @@ const rootRoute = createRouteConfig({
   component: DefaultLayout,
 });
 
-const indexRoute = rootRoute.createRoute({
+export const indexRoute = rootRoute.createRoute({
   path: '/',
   component: IndexPage,
 });
 
 export const routeConfig = rootRoute.addChildren([indexRoute]);
 
-export const appRouter = createReactRouter({
+export const router = createReactRouter({
   routeConfig,
   defaultPreload: 'intent',
   defaultPendingComponent: () => <CircularProgress />,

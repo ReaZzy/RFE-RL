@@ -1,17 +1,19 @@
 import React, { FC, useState } from 'react';
 import { Box, Button, Stack, TextField, useTheme } from '@mui/material';
 import {
+  addTagHashToUrl,
+  deleteTagFromHash,
   getTagsFromUrlHash,
   TagType,
   tagValidationSchema,
 } from '@src/feautures/TagsList/tags.utils';
 import TagsList from '@src/feautures/TagsList/TagsList';
-import { appRouter } from '@src/router/router';
+import { router } from '@src/router/router';
 import { parseZodErrors } from '@src/utils/errors/zod.utils';
 
 const IndexPage: FC = () => {
-  const tags = getTagsFromUrlHash(appRouter.history.location.hash);
-  console.log(tags);
+  const tags = getTagsFromUrlHash(router.history.location.hash);
+
   const theme = useTheme();
   const [tag, setTag] = useState<TagType>('');
   const [tagError, setTagError] = useState<string | null>(null);
@@ -32,9 +34,21 @@ const IndexPage: FC = () => {
 
   const handleAddTag = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    await appRouter.navigate({
+    const newHash = addTagHashToUrl(router.history.location.hash, tag);
+    await router.navigate({
       to: '/',
-      hash: `tags=${tag}`,
+      hash: newHash,
+    });
+    return setTag('');
+  };
+
+  const handleDeleteTag = async (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const newHash = deleteTagFromHash(router.history.location.hash, tag);
+    console.log(newHash, 'new');
+    await router.navigate({
+      to: '/',
+      hash: newHash,
     });
     return setTag('');
   };
@@ -64,6 +78,15 @@ const IndexPage: FC = () => {
             sx={{ maxHeight: '40px' }}
           >
             Add tag
+          </Button>{' '}
+          <Button
+            onClick={handleDeleteTag}
+            type="submit"
+            variant="contained"
+            disabled={!!tagError || !tag.trim()}
+            sx={{ maxHeight: '40px' }}
+          >
+            Delete tag
           </Button>
         </Stack>
       </form>
