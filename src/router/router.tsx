@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material';
 import DefaultLayout from '@src/layouts/defaultLayout/Default.layout';
 import IndexPage from '@src/pages';
 import { createReactRouter, createRouteConfig } from '@tanstack/react-router';
@@ -24,6 +25,10 @@ const indexRoute = rootRoute.createRoute({
   component: IndexPage,
 });
 
-const routeConfig = rootRoute.addChildren([indexRoute]);
+export const routeConfig = rootRoute.addChildren([indexRoute]);
 
-export const appRouter = createReactRouter({ routeConfig });
+export const appRouter = createReactRouter({
+  routeConfig,
+  defaultPreload: 'intent',
+  defaultPendingComponent: () => <CircularProgress />,
+});
