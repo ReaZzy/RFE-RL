@@ -79,6 +79,7 @@
       }
     ],
     "prettier/prettier": "warn",
+    "react/jsx-key": "error",
     "no-console": "warn",
     "no-debugger": "warn",
     "no-duplicate-imports": "error",
@@ -90,7 +91,6 @@
     "prefer-object-spread": "error",
     "prefer-template": "error",
     "no-mixed-spaces-and-tabs": "warn",
-    "@typescript-eslint/default-param-last": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "react/jsx-curly-brace-presence": [
       "error",
@@ -104,7 +104,7 @@
     "@typescript-eslint/dot-notation": "off",
     "@typescript-eslint/naming-convention": "off",
     "@typescript-eslint/no-unused-vars": [
-      "error",
+      "warn",
       {
         "argsIgnorePattern": "^_",
         "varsIgnorePattern": "^_"

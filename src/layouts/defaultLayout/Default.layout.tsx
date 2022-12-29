@@ -14,4 +14,5 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
   );
 };
 
+DefaultLayout.displayName = 'DefaultLayout';
 export default DefaultLayout;

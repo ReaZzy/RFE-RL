@@ -11,4 +11,5 @@ const App: React.FC = () => {
   );
 };
 
+App.displayName = 'App';
 export default App;

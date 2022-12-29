@@ -23,7 +23,7 @@ export type TagType = z.infer<typeof tagValidationSchema>;
  * with multiple ones #tags=1,2,3#tags=123,123#tags=3
  */
 
-export const getTagsFromUrlHash = (hash: string): Array<string> => {
+export const getTagsFromUrlHash = (hash: string): Array<TagType> => {
   const tagsRegex = /#tags=([^#&]+)/gi;
   const result = [];
   let tags = tagsRegex.exec(hash);
