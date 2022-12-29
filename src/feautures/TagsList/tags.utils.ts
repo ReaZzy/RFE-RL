@@ -34,18 +34,22 @@ export const getTagsFromUrlHash = (hash: string): Array<TagType> => {
   return result.flat();
 };
 
+const addTagHashToUrlReplacer = (hashToReplace: string, tag: string) => {
+  const oldTags = hashToReplace
+    .split('=')[1]
+    .split(',')
+    .filter((hashTag) => !!hashTag);
+  oldTags.push(tag.trim());
+  return `#tags=${oldTags}`;
+};
+
 export const addTagHashToUrl = (hash: string, tag: string): string => {
   const tagsRegex = /#tags=([^#&]+)/i;
   const tags = hash.match(tagsRegex);
 
   if (Array.isArray(tags) && tags.length > 0) {
-    hash = hash.replace(tagsRegex, (h) => {
-      const oldTags = h
-        .split('=')[1]
-        .split(',')
-        .filter((hashTag) => !!hashTag);
-      oldTags.push(tag.trim());
-      return `#tags=${oldTags}`;
+    hash = hash.replace(tagsRegex, (hashToReplace) => {
+      return addTagHashToUrlReplacer(hashToReplace, tag);
     });
   } else {
     hash += `#tags=${tag}`;
@@ -83,7 +87,8 @@ export const deleteTagFromHash = (
        * #tags=1234#tags=123 (tagToDelete: 123) -> #tags=1234
        */
 
-      result = result.replace(new RegExp(`${tags[0]}(?=(#|$))`), replaceValue);
+      const replaceRegex = new RegExp(`${tags[0]}(?=(#|$))`);
+      result = result.replace(replaceRegex, replaceValue);
       hasDeleted = true;
     }
     tags = tagsRegex.exec(hash);
