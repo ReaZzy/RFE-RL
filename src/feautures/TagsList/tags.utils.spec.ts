@@ -88,4 +88,8 @@ describe('deleteTagFromHash', () => {
     const act = deleteTagFromHash('#tags=1234#tags=123', '123');
     expect(act).toEqual('tags=1234');
   });
+  it('Should delete tags if there are more than 1 #tags (2)', () => {
+    const act = deleteTagFromHash('#tags=1234#tags=123', '1234');
+    expect(act).toEqual('tags=123');
+  });
 });

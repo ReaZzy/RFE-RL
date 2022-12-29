@@ -66,13 +66,11 @@ export const deleteTagFromHash = (
   let result = hash;
   while (!hasDeleted && tags !== null) {
     let tempTags = tags[1]?.split(',');
-    const tagToDeleteIndex = tempTags.findIndex(
-      (tag) => tag === tagToDelete.trim(),
-    );
+    const tagToDeleteIndex = tempTags.indexOf(tagToDelete.trim());
+
     if (tagToDeleteIndex > -1) {
       delete tempTags[tagToDeleteIndex];
       tempTags = tempTags.filter((tag) => !!tag);
-
       const replaceValue =
         tempTags.length > 0 ? `#tags=${tempTags.join(',')}` : '';
       /*
@@ -84,8 +82,8 @@ export const deleteTagFromHash = (
        * with regexp
        * #tags=1234#tags=123 (tagToDelete: 123) -> #tags=1234
        */
-      result = result.replace(new RegExp(`${tags[0]}$`), replaceValue);
 
+      result = result.replace(new RegExp(`${tags[0]}(?=(#|$))`), replaceValue);
       hasDeleted = true;
     }
     tags = tagsRegex.exec(hash);
